@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Session viewer - Web Session Recorder</title>
+    <link rel="stylesheet" href="viewer.css" />
+  </head>
+  <body>
+    <header>
+      <select id="sessionSelect"></select>
+      <span id="sessionMeta" class="meta"></span>
+      <span class="spacer"></span>
+      <button id="exportEvents">Export events (NDJSON)</button>
+      <button id="exportBundle">Export bundle (JSON)</button>
+      <button id="reload">Reload</button>
+      <button id="deleteSession" class="danger">Delete</button>
+    </header>
+
+    <section class="timeline">
+      <canvas id="timeline" height="54"></canvas>
+      <div id="legend" class="legend"></div>
+    </section>
+
+    <section class="toolbar">
+      <input id="search" type="search" placeholder="Search type, path, url, text..." />
+      <select id="typeFilter" multiple size="1"></select>
+      <button id="presetMoves">Moves</button>
+      <button id="presetNet">Network</button>
+      <button id="presetDom">DOM</button>
+      <button id="presetAll">All</button>
+      <label><input type="checkbox" id="onlyAssets" /> with assets</label>
+      <span id="counter" class="meta"></span>
+    </section>
+
+    <main>
+      <div class="list" id="listScroller">
+        <div class="vspacer" id="spacer"></div>
+        <div class="rows" id="rows"></div>
+      </div>
+      <div class="detail" id="detail">
+        <div class="empty">Select an event</div>
+      </div>
+    </main>
+    <script type="module" src="viewer.js"></script>
+  </body>
+</html>

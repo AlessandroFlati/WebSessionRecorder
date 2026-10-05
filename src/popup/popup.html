@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Web Session Recorder</title>
+    <link rel="stylesheet" href="popup.css" />
+  </head>
+  <body>
+    <header>
+      <div>
+        <div class="title">Web Session Recorder</div>
+        <div class="tab" id="frames">-</div>
+      </div>
+      <div class="tab" id="tabInfo">-</div>
+    </header>
+
+    <section class="controls">
+      <button id="toggle" class="primary">Start recording</button>
+      <button id="mark" disabled title="Insert a labelled marker into the timeline">Mark</button>
+      <button id="shot" disabled title="Capture a screenshot now">Shot</button>
+    </section>
+
+    <section class="probe">
+      <div class="probe-head">
+        <span>Framework state</span>
+        <input id="probeSelector" type="text" placeholder="CSS selector (optional)" />
+        <button id="probeRun">Read</button>
+      </div>
+      <div id="probeResult" class="sub"></div>
+    </section>
+
+    <section class="stats" id="stats" hidden>
+      <div class="row"><span>Session</span><code id="sessionId">-</code></div>
+      <div class="row"><span>Elapsed</span><span id="elapsed">-</span></div>
+      <div class="row"><span>Events</span><span id="events">-</span></div>
+      <div class="row"><span>Captured</span><span id="bytes">-</span></div>
+      <div class="row"><span>Sources</span><span id="resources">-</span></div>
+      <div class="types" id="types"></div>
+    </section>
+
+    <details class="settings">
+      <summary>Capture settings</summary>
+      <div class="grid" id="settings">
+        <label><input type="checkbox" data-key="dom" /> DOM snapshots</label>
+        <label><input type="checkbox" data-key="mutations" /> DOM mutations</label>
+        <label><input type="checkbox" data-key="styles" /> Computed cell styles</label>
+        <label><input type="checkbox" data-key="input" /> Mouse and keyboard</label>
+        <label><input type="checkbox" data-key="network" /> fetch / XHR bodies</label>
+        <label><input type="checkbox" data-key="webRequestMeta" /> Network metadata</label>
+        <label><input type="checkbox" data-key="scripts" /> Scripts and styles</label>
+        <label><input type="checkbox" data-key="codeBlocks" /> Embedded JSON blocks</label>
+        <label><input type="checkbox" data-key="console" /> Console and errors</label>
+        <label><input type="checkbox" data-key="globals" /> Page globals</label>
+        <label><input type="checkbox" data-key="storage" /> Web storage</label>
+        <label><input type="checkbox" data-key="indexedDbDump" /> IndexedDB dumps</label>
+        <label><input type="checkbox" data-key="screenshotOnClick" /> Screenshot on click</label>
+        <label><input type="checkbox" data-key="useDebugger" /> Debugger (full bodies)</label>
+        <label><input type="checkbox" data-key="redact" /> Redact credentials</label>
+        <label><input type="checkbox" data-key="autoRecord" /> Auto-record matching URLs</label>
+        <label class="num">Keyframe ms <input type="number" data-key="domKeyframeMs" min="2000" step="1000" /></label>
+        <label class="num">Pointer ms <input type="number" data-key="pointerMoveMs" min="0" step="5" /></label>
+        <label class="num">Body limit <input type="number" data-key="networkBodyLimit" min="1024" step="1024" /></label>
+        <label class="num">Shot every ms <input type="number" data-key="screenshotIntervalMs" min="0" step="500" /></label>
+        <label class="wide">Auto-record URLs
+          <textarea data-key="autoRecordPatterns" rows="2" placeholder="https://example.com/*
+*://*.example.org/app/*"></textarea>
+        </label>
+        <label class="wide">Extra elements to follow
+          <textarea data-key="watchSelectors" rows="2" placeholder=".board .cell, [data-token]"></textarea>
+        </label>
+      </div>
+    </details>
+
+    <section class="sessions">
+      <div class="sessions-head">
+        <span>Recorded sessions</span>
+        <button id="openViewer" class="link">Open viewer</button>
+      </div>
+      <div id="sessionList" class="session-list"></div>
+    </section>
+
+    <footer>
+      <span id="storage">-</span>
+      <span id="error" class="error"></span>
+    </footer>
+
+    <script type="module" src="popup.js"></script>
+  </body>
+</html>
